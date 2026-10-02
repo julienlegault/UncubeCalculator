@@ -9,8 +9,9 @@ Run the calculator with Python 3:
 python3 uncube_calculator.py
 ```
 
-The script downloads the current Scryfall bulk data and prints case-insensitive
-letter frequencies followed by the total word count. Run the focused tests with:
+The script downloads the current Scryfall bulk data and prints case-insensitive,
+accent-insensitive letter frequencies followed by the total word count. Run the
+focused tests with:
 
 ```sh
 python3 -m unittest
