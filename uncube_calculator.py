@@ -47,7 +47,7 @@ def load_card_names():
         raise RuntimeError("Scryfall did not provide an oracle_cards bulk dataset")
 
     request = Request(
-        oracle_cards["download_uri"],
+        oracle_cards["jsonl_download_uri"],
         headers={"Accept": "application/json", "User-Agent": USER_AGENT},
     )
     with urlopen(request, timeout=120) as response:
