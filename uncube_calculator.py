@@ -2,6 +2,7 @@
 """Calculate letter and word totals across Scryfall card names."""
 
 from collections import Counter
+import gzip
 import json
 import re
 from urllib.request import Request, urlopen
@@ -30,7 +31,7 @@ def calculate_statistics(names):
 
 
 def load_card_names():
-    """Download the Scryfall Oracle Cards bulk dataset and return its names."""
+    """Stream names from Scryfall's gzipped Oracle Cards JSONL bulk dataset."""
     request = Request(
         BULK_DATA_URL,
         headers={"Accept": "application/json", "User-Agent": USER_AGENT},
@@ -50,9 +51,10 @@ def load_card_names():
         headers={"Accept": "application/json", "User-Agent": USER_AGENT},
     )
     with urlopen(request, timeout=120) as response:
-        cards = json.load(response)
-
-    return (card["name"] for card in cards)
+        with gzip.GzipFile(fileobj=response) as archive:
+            for line in archive:
+                if line.strip():
+                    yield json.loads(line)["name"]
 
 
 def main():

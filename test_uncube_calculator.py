@@ -1,6 +1,8 @@
 import unittest
 from collections import Counter
 from io import BytesIO
+import gzip
+import json
 from unittest.mock import patch
 
 from uncube_calculator import calculate_statistics, load_card_names
@@ -35,7 +37,11 @@ class CalculateStatisticsTests(unittest.TestCase):
                 b'{"data":[{"type":"default_cards","download_uri":"unused"},'
                 b'{"type":"oracle_cards","download_uri":"https://example.test/cards"}]}'
             ),
-            BytesIO(b'[{"name":"Black Lotus"},{"name":"Ancestral Recall"}]'),
+            BytesIO(
+                gzip.compress(
+                    b'{"name":"Black Lotus"}\n{"name":"Ancestral Recall"}\n'
+                )
+            ),
         ]
 
         self.assertEqual(
