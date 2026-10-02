@@ -15,3 +15,7 @@ letter frequencies followed by the total word count. Run the focused tests with:
 ```sh
 python3 -m unittest
 ```
+
+To run the calculator on GitHub, open the **Actions** tab, select **Calculate
+card-name statistics**, and choose **Run workflow**. The letter frequencies and
+word total appear in the workflow run's logs.
