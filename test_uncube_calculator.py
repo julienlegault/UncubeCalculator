@@ -27,6 +27,12 @@ class CalculateStatisticsTests(unittest.TestCase):
         self.assertEqual(letters, {"a": 1, "e": 1, "r": 1, "s": 3, "t": 1})
         self.assertEqual(words, 1)
 
+    def test_counts_accented_letters_as_their_base_letters(self):
+        letters, words = calculate_statistics(["Café", "Cafe\u0301"])
+
+        self.assertEqual(letters, {"a": 2, "c": 2, "e": 2, "f": 2})
+        self.assertEqual(words, 2)
+
     def test_empty_names(self):
         self.assertEqual(calculate_statistics([]), (Counter(), 0))
 

@@ -5,6 +5,7 @@ from collections import Counter
 import gzip
 import json
 import re
+import unicodedata
 from urllib.request import Request, urlopen
 
 
@@ -22,8 +23,8 @@ def calculate_statistics(names):
         letters.update(
             folded
             for character in name
-            if character.isalpha()
-            for folded in character.casefold()
+            for folded in unicodedata.normalize("NFD", character.casefold())
+            if folded.isalpha()
         )
         word_count += len(WORD_PATTERN.findall(name))
 
